@@ -17,7 +17,7 @@ namespace Catalog.Repositories
         private const string _collectionName="items";
         private readonly IMongoCollection<Item> _itemsCollection;
         public MongoDbRepository(IOptions<MongoDbConfig> mongodbConfig){
-            var mongoClient= new MongoClient(mongodbConfig.Value.Connectionstring);
+            var mongoClient= new MongoClient(mongodbConfig.Value.ConnectionString);
             var mongoDatabase= mongoClient.GetDatabase(mongodbConfig.Value.DatabaseName);
             _itemsCollection=mongoDatabase.GetCollection<Item>(_collectionName);
         }

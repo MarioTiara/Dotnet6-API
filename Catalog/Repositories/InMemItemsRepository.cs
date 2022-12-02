@@ -49,5 +49,30 @@ namespace Catalog.Repositories
             var index=items.FindIndex(existingItem=>existingItem.Id==id);
             items.RemoveAt(index);
         }
+
+        public Task<IEnumerable<Item>> GetItemsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Item> GetItemAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CreateItemAsync(Item item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateItemAsync(Item item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteItemAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

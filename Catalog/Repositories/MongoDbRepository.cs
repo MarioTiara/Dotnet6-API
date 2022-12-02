@@ -26,9 +26,19 @@ namespace Catalog.Repositories
             _itemsCollection.InsertOne(item);
         }
 
+        public async Task CreateItemAsync(Item item)
+        {
+            await _itemsCollection.InsertOneAsync(item);
+        }
+
         public void DeleteItem(Guid id)
         {
             _itemsCollection.DeleteOne(item=>item.Id==id);
+        }
+
+        public async Task DeleteItemAsync(Guid id)
+        {
+            await _itemsCollection.DeleteOneAsync(item=>item.Id==id);
         }
 
         public Item GetItem(Guid id)
@@ -36,14 +46,33 @@ namespace Catalog.Repositories
             return _itemsCollection.Find(item=>item.Id==id).FirstOrDefault();
         }
 
+        public async Task<Item> GetItemAsync(Guid id)
+        {
+            return (await _itemsCollection.
+                    FindAsync(item=>item.Id==id)).
+                    FirstOrDefault();;
+        }
+
         public IEnumerable<Item> GetItems()
         {
             return _itemsCollection.Find(_=>true).ToList();
         }
 
+        public async Task<IEnumerable<Item>> GetItemsAsync()
+        {
+            return (await _itemsCollection.FindAsync(_=>true)).ToList();
+        }
+
         public void UpdateItem(Item item)
         {
             _itemsCollection.FindOneAndReplace(x=>x.Id==item.Id, item);
+        }
+
+        public async Task UpdateItemAsync(Item item)
+        {
+            await _itemsCollection.
+                    FindOneAndReplaceAsync(x=>x.Id==item.Id, 
+                                           item);
         }
     }
 }

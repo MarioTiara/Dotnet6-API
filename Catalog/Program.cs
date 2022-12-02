@@ -18,7 +18,7 @@ builder.Services.AddSingleton<IItemRepository, MongoDbRepository>();
 builder.Services.Configure<MongoDbConfig>(
     builder.Configuration.GetSection("MongoDbConfig")
 );
-
+builder.Services.AddHealthChecks();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,7 +33,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapHealthChecks("health");
 app.Run();
 
 

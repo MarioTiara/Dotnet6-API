@@ -7,7 +7,7 @@ namespace Catalog.Config
 {
     public class MongoDbConfig
     {
-        public string Host { get; set; }
+        public string Host { get; set; } 
         public int Port {get;set;}
         public string DatabaseName {get;set;}
         public string User {get;set;}

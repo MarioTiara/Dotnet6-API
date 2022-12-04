@@ -76,6 +76,32 @@ namespace Catalog.UnitTests.Controllers
         }
 
 
+         [Fact]
+        public async Task CretaeItems_WithItemToCreate_ReturnsAllItems(){
+            // Arrange
+            var itemToCreate= new CreateItmDto(){
+                Name=Guid.NewGuid().ToString(),
+                Price=rand.Next(1000)
+            };
+            
+            var controller= new ItemsController(repositoryStub.Object, loggerStub.Object);
+            // Act
+            var result= await controller.CreateItem(itemToCreate);
+
+            // Assert
+            var createdItem=(result.Result as CreatedAtActionResult).Value as ItemDto;
+
+            itemToCreate.Should().BeEquivalentTo(
+                createdItem,
+                options=>options.ComparingByMembers<ItemDto>().ExcludingMissingMembers()
+            );
+
+            createdItem.Id.Should().NotBeEmpty();
+            
+            
+        }
+
+
 
         private Item CreateRandomItem(){
             return new (){

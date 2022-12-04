@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.Config
+namespace Catalog.Api.Config
 {
     public class MongoDbConfig
     {

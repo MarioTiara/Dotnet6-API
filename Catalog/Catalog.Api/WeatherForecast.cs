@@ -1,4 +1,6 @@
-namespace Catalog;
+using System;
+
+namespace Catalog.Api;
 
 public class WeatherForecast
 {

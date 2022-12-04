@@ -6,11 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 
-using Catalog.Entities;
+using Catalog.Api.Entities;
 using Microsoft.Extensions.Options;
-using Catalog.Config;
+using Catalog.Api.Config;
 
-namespace Catalog.Repositories
+namespace Catalog.Api.Repositories
 {
     public class MongoDbRepository : IItemRepository
     {

@@ -1,8 +1,15 @@
+using System;
+using System.Linq;
 using System.Net.Mime;
 using System.Text.Json;
-using Catalog.Config;
-using Catalog.Repositories;
+using Catalog.Api.Config;
+using Catalog.Api.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;

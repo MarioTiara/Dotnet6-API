@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.Dtos
+namespace Catalog.Api.Dtos
 {
-    public class ItemDto
+    public record UpdatedItemDto
     {
-        public Guid Id { get; init; }
+        [Required]
         public string Name { get; init; }
+
+        [Required]
+        [Range(1,1000)]
         public decimal Price { get; set; }
-        public DateTimeOffset CreatedDate { get; init; }
+
     }
 }

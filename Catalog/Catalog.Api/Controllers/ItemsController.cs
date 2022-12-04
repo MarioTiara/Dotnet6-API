@@ -23,7 +23,7 @@ namespace Catalog.Api.Controllers
         [HttpGet]
         public async Task<IEnumerable<ItemDto>> GetItems(){
             var items= await _repository.GetItemsAsync();
-            return items.Select(item=>item.AsDto());
+            return items.Select(item=>item.AsDto()).ToList();
         }
 
         [HttpGet("{id}")]

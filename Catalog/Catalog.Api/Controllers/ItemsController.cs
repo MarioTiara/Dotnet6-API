@@ -14,9 +14,10 @@ namespace Catalog.Api.Controllers
     public class ItemsController:ControllerBase
     {
         private readonly IItemRepository _repository;
-
-        public ItemsController(IItemRepository repository){
+        private readonly ILogger<ItemsController> _logger;
+        public ItemsController(IItemRepository repository, ILogger<ItemsController> logger){
             _repository=repository;
+            _logger=logger;
         }
 
         [HttpGet]
@@ -31,7 +32,7 @@ namespace Catalog.Api.Controllers
             if (item is null){
                 return NotFound();
             }
-            return Ok(item.AsDto());
+            return item.AsDto();
         }
 
         [HttpPost]

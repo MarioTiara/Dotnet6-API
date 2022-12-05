@@ -79,10 +79,10 @@ namespace Catalog.UnitTests.Controllers
          [Fact]
         public async Task CretaeItems_WithItemToCreate_ReturnsAllItems(){
             // Arrange
-            var itemToCreate= new CreateItmDto(){
-                Name=Guid.NewGuid().ToString(),
-                Price=rand.Next(1000)
-            };
+            var itemToCreate= new CreateItemDto(
+                Guid.NewGuid().ToString(),
+                Guid.NewGuid().ToString(), 
+                rand.Next(1000));
             
             var controller= new ItemsController(repositoryStub.Object, loggerStub.Object);
             // Act
@@ -107,10 +107,7 @@ namespace Catalog.UnitTests.Controllers
                 .ReturnsAsync((Item)null);
             var Controller= new ItemsController(repositoryStub.Object, loggerStub.Object);
             
-            var itemDto=new UpdatedItemDto(){
-                Name=Guid.NewGuid().ToString(),
-                Price=rand.Next(),
-            };
+            var itemDto=new UpdateItemDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), rand.Next(1000));
             //Act
              var result= await Controller.UpdateItem(Guid.NewGuid(), itemDto);
 
@@ -128,19 +125,20 @@ namespace Catalog.UnitTests.Controllers
             var Controller= new ItemsController(repositoryStub.Object, loggerStub.Object);
             
             var id=existingItem.Id;
-            var itemDto=new UpdatedItemDto(){
-                Name=Guid.NewGuid().ToString(),
-                Price=existingItem.Price+4,
-            };
+            var itemDto=new UpdateItemDto(
+                Guid.NewGuid().ToString(),
+                Guid.NewGuid().ToString(),
+                existingItem.Price+3
+            );
+              
             //Act
              var result= await Controller.UpdateItem(id, itemDto);
 
             //Assert
              Assert.IsType<NoContentResult>(result);
-
         }
 
-         [Fact]
+        [Fact]
         public async Task DeletItem_WithUnexistingItem_ReturnsNotFound(){
             //Arrange
             var existingItem= CreateRandomItem();
@@ -157,7 +155,7 @@ namespace Catalog.UnitTests.Controllers
         }
 
 
-         [Fact]
+        [Fact]
         public async Task DeletItem_WithExistingItem_ReturnsNoContent(){
             //Arrange
             repositoryStub.Setup(repo => repo.GetItemAsync(It.IsAny<Guid>()))

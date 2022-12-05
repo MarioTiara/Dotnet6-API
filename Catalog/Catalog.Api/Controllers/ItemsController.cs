@@ -36,7 +36,7 @@ namespace Catalog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ItemDto>> CretaeItem(CreateItmDto itemDto){
+        public async Task<ActionResult<ItemDto>> CreateItem(CreateItmDto itemDto){
             Item item= new (){
                 Id=  Guid.NewGuid(),
                 Name= itemDto.Name,

@@ -98,7 +98,25 @@ namespace Catalog.UnitTests.Controllers
 
             createdItem.Id.Should().NotBeEmpty();
             
+        }
+
+        [Fact]
+        public async Task UpdateItem_WithUnexistingItem_ReturnsNotFound(){
+            //Arrange
+            repositoryStub.Setup(repo => repo.GetItemAsync(It.IsAny<Guid>()))
+                .ReturnsAsync((Item)null);
+            var Controller= new ItemsController(repositoryStub.Object, loggerStub.Object);
             
+            var itemDto=new UpdatedItemDto(){
+                Name=Guid.NewGuid().ToString(),
+                Price=rand.Next(),
+            };
+            //Act
+             var result= await Controller.UpdateItem(Guid.NewGuid(), itemDto);
+
+            //Assert
+             Assert.IsType<NotFoundResult>(result);
+
         }
 
 

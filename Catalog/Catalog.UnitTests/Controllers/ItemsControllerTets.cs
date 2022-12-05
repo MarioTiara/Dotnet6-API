@@ -140,6 +140,38 @@ namespace Catalog.UnitTests.Controllers
 
         }
 
+         [Fact]
+        public async Task DeletItem_WithUnexistingItem_ReturnsNotFound(){
+            //Arrange
+            var existingItem= CreateRandomItem();
+            repositoryStub.Setup(repo => repo.GetItemAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(existingItem);
+            var Controller= new ItemsController(repositoryStub.Object, loggerStub.Object);
+            
+            //Act
+             var result= await Controller.DeletItem(new Guid());
+
+            //Assert
+             Assert.IsType<NoContentResult>(result);
+
+        }
+
+
+         [Fact]
+        public async Task DeletItem_WithExistingItem_ReturnsNoContent(){
+            //Arrange
+            repositoryStub.Setup(repo => repo.GetItemAsync(It.IsAny<Guid>()))
+                .ReturnsAsync((Item)null);
+            var Controller= new ItemsController(repositoryStub.Object, loggerStub.Object);
+            
+            //Act
+             var result= await Controller.DeletItem(new Guid());
+
+            //Assert
+             Assert.IsType<NotFoundResult>(result);
+
+        }
+
         private Item CreateRandomItem(){
             return new (){
                 Id= new Guid(),

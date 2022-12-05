@@ -119,7 +119,26 @@ namespace Catalog.UnitTests.Controllers
 
         }
 
+         [Fact]
+        public async Task UpdateItem_WithExistingItem_ReturnsNoContent(){
+            //Arrange
+            var existingItem= CreateRandomItem();
+            repositoryStub.Setup(repo => repo.GetItemAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(existingItem);
+            var Controller= new ItemsController(repositoryStub.Object, loggerStub.Object);
+            
+            var id=existingItem.Id;
+            var itemDto=new UpdatedItemDto(){
+                Name=Guid.NewGuid().ToString(),
+                Price=existingItem.Price+4,
+            };
+            //Act
+             var result= await Controller.UpdateItem(id, itemDto);
 
+            //Assert
+             Assert.IsType<NoContentResult>(result);
+
+        }
 
         private Item CreateRandomItem(){
             return new (){

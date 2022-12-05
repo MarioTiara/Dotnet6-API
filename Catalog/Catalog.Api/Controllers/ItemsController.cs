@@ -25,6 +25,16 @@ namespace Catalog.Api.Controllers
             var items= await _repository.GetItemsAsync();
             return items.Select(item=>item.AsDto()).ToList();
         }
+        [HttpGet]
+        public async Task<IEnumerable<ItemDto>> GetItems(string nameToMatch=null)
+        {
+            var items= (await _repository.GetItemsAsync()).Select(item=>item.AsDto());
+            if (!string.IsNullOrWhiteSpace(nameToMatch)){
+                items= items.Where(item=>item.Name.Contains(nameToMatch, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return items;
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ItemDto>> GetItem(Guid id){
@@ -71,5 +81,6 @@ namespace Catalog.Api.Controllers
             return NoContent();
         }
 
+      
     }
 }

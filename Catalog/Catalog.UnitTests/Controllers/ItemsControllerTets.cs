@@ -71,6 +71,28 @@ namespace Catalog.UnitTests.Controllers
             actualItems.Should().BeEquivalentTo(expectedItem);
         }
 
+           public async Task GetItems_WithMatchingItems_ReturnsMatchingItems(){
+            // Arrange
+            var allItems = new [] {
+                new Item (){Name="Potion"},
+                new Item (){Name="Antidote"},
+                new Item (){Name="Hi-Potion"}
+            };
+
+            var nameToMatch= "Potion";
+            repositoryStub.Setup(repo => repo.GetItemsAsync())
+                .ReturnsAsync(allItems);
+
+            var controller= new ItemsController(repositoryStub.Object, loggerStub.Object);
+            // Act
+            IEnumerable<ItemDto> foundItems= await controller.GetItems(nameToMatch);
+
+            // Assert
+            foundItems.Should().OnlyContain(
+                item=>item.Name==allItems[0].Name || item.Name==allItems[2].Name
+            );
+        }
+
 
          [Fact]
         public async Task CretaeItems_WithItemToCreate_ReturnsAllItems(){

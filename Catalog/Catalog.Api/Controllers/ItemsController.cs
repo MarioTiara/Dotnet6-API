@@ -36,10 +36,11 @@ namespace Catalog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ItemDto>> CreateItem(CreateItmDto itemDto){
+        public async Task<ActionResult<ItemDto>> CreateItem(CreateItemDto itemDto){
             Item item= new (){
                 Id=  Guid.NewGuid(),
                 Name= itemDto.Name,
+                Description=itemDto.Description,
                 Price=itemDto.Price,
                 CreatedDate= DateTimeOffset.UtcNow
             };
@@ -48,16 +49,14 @@ namespace Catalog.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateItem(Guid id, UpdatedItemDto itemDto){
+        public async Task<ActionResult> UpdateItem(Guid id, UpdateItemDto itemDto){
             var existingItem=  await _repository.GetItemAsync(id);
             if (existingItem is null){
                 return NotFound();
             }
-            Item UpdatedItem= existingItem with{
-                Name =itemDto.Name,
-                Price= itemDto.Price
-            };
-            await _repository.UpdateItemAsync(UpdatedItem);
+            existingItem.Name=itemDto.Name;
+            existingItem.Price=itemDto.Price;
+            await _repository.UpdateItemAsync(existingItem);
             return NoContent();
         }
 

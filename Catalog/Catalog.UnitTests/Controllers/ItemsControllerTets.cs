@@ -68,11 +68,7 @@ namespace Catalog.UnitTests.Controllers
             // Assert
             Assert.Equal(expectedItem.Count(), actualItems.Count());
             Assert.IsType<List<ItemDto>>(actualItems);
-            actualItems.Should().BeEquivalentTo(
-                expectedItem,
-                options=>options.ComparingByMembers<Item>()
-            );
-            
+            actualItems.Should().BeEquivalentTo(expectedItem);
         }
 
 
